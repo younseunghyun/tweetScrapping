@@ -51,7 +51,7 @@ public class TwitterAPIScrapper {
         System.out.println(String.format("bearer access_token : %s", encodedBearKey));
 
         JSONArray result;
-       
+
         while (true) {
             try {
                 result = scrapTweet(encodedBearKey);
@@ -69,7 +69,6 @@ public class TwitterAPIScrapper {
 
     }
 
-   
     private String getBearKey()
         throws IOException, ParseException
     {
@@ -137,7 +136,9 @@ public class TwitterAPIScrapper {
             JSONParser parser = new JSONParser();
             JSONObject obj = (JSONObject) parser.parse(serverResponse.readLine());
             JSONArray result = (JSONArray) obj.get("statuses");
-            max_id = getMaxId(result);
+            if (result.size() > 0) {
+                max_id = getMaxId(result);
+            }
             return (JSONArray) obj.get("statuses");
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,10 +151,10 @@ public class TwitterAPIScrapper {
         }
 
     }
-    
+
     @SuppressWarnings("unchecked")
     private void toFile(JSONArray result) {
-        
+
         File target = new File(String.format("tweets/%s", keyword, fileNum));
         if (!target.isDirectory()) target.mkdirs();
 
@@ -172,7 +173,6 @@ public class TwitterAPIScrapper {
         }
         ++fileNum;
     }
-
 
     private List<String> parmMaker(Map<String, String> kvMap)
     {
