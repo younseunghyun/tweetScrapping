@@ -110,7 +110,6 @@ public class TwitterAPIScrapper {
     {
         Map<String, String> parmMap = new HashMap<>();
         parmMap.put("q", keyword);
-        parmMap.put("until", LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         parmMap.put("result_type", "recent");
         parmMap.put("count", "100");
         parmMap.put("max_id", max_id != null ? max_id : "");
